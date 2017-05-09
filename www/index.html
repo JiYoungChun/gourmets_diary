@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+
+<head>
+    <!--
+        Customize this policy to fit your own app's needs. For more guidance, see:
+            https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
+        Some notes:
+            * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+            * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+            * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+                * Enable inline JS: add 'unsafe-inline' to default-src
+        -->
+    <!--   <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;"> -->
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <title>Gourmet's Diary</title>
+
+    <script type="text/javascript">
+        var currentScreen = null;
+        var screen1 = null;
+        var screen2 = null;
+        var screen3 = null;
+        var screen4 = null;
+        var screen6 = null;
+        var letseatButton = null;
+        var circleButton = null;
+        var trangleButton = null;
+        var heartButton = null;
+        var screenLobster = null;
+        var screenPopbar = null;
+        var screenGrom = null;
+        var screenOotoya = null;
+        var screenVan = null;
+        var screenAbc = null;
+        var screenMarea = null;
+        var screenMarea2 = null;
+        var screenFutago = null;
+        var screenTimhowan = null;
+
+
+        // Setup Lifecycle Events
+        function appPause() {
+            console.log("pause");
+        }
+
+        function appResume() {
+            console.log("resume");
+        }
+
+        function ready() {
+            console.log("ready");
+            document.addEventListener('resume', appResume);
+            document.addEventListener('pause', appPause);
+
+        }
+
+        var blockIndex = 0;
+        var highestHappy = 0;
+        var happiestIndex = 0;
+        var sound;
+
+        function preload() {
+            sound = loadSound("audio/beep.mp3");
+        }
+
+        function gotoTodays() {
+            console.log("Going to Today's Gourmet (screen2)")
+            changeScreen(screen2);
+            //show image for two seconds 
+
+            document.getElementById("favorite").style.display = 'none';
+
+            blocks = document.getElementsByClassName("block");
+            isFaceTracking = true;
+
+
+            for (var i = 0; i < blocks.length; i++) {
+                blocks[i].style.display = 'none';
+                setTimeout(function() {
+
+                    //hide previous image if i != 0
+
+
+                    // blocks[blockIndex].hide();
+                    //show big image
+                    blocks[blockIndex].style.display = 'block';
+                    console.log(blocks[blockIndex]);
+                    console.log(happyVal);
+
+                    if (highestHappy < happyVal) {
+                        highestHappy = happyVal;
+                        happiestIndex = blockIndex;
+                    }
+
+                    blockIndex++;
+
+
+                    if (blockIndex == blocks.length) //showed all blocks, reset block
+                    {
+                        blockIndex = 0;
+                        //hide last image
+                        isFaceTracking = false;
+                        console.log(blocks[happiestIndex]);
+
+                        for (var j = 0; j < blocks.length; j++) {
+
+                            sound.play();
+                            blocks[j].style.display = 'none';
+                        }
+
+
+                        blocks[happiestIndex].style.display = 'block';
+                        document.getElementById("favorite").style.display = 'block';
+
+
+                        highestHappy = null;
+                        happiestIndex = null;
+
+                    }
+                }, 2000 * i);
+
+
+                //blocks[i].addEventListener('click', gotoMydiary);
+            }
+            // document.getElementById("abc").innerHTML="look at the photo of food";
+            //          //ADD THIS CODE
+
+            //          setTimeout(function(){
+            //             console.log("???");
+            //          document.getElementById("abc").innerHTML="";
+            //          },3000);
+
+
+
+        }
+
+        function gotoMydiary() {
+            console.log("Going to My Diary (screen3)")
+            changeScreen(screen3);
+
+        }
+
+        function gotoMyfavorite() {
+            console.log("Going to My Favorite (screen4)")
+            changeScreen(screen4);
+        }
+
+        function gotoLobster() {
+            console.log("Going to Photo (screen5)")
+            changeScreen(screenLobster);
+        }
+
+        function gotoFutago() {
+            console.log("Going to Photo (screen5)")
+            changeScreen(screenFutago);
+        }
+
+        function gotoGrom() {
+            console.log("Going to Photo (screen5)")
+            changeScreen(screenGrom);
+        }
+
+        function gotoVan() {
+            console.log("Going to Photo (screen5)")
+            changeScreen(screenVan);
+        }
+
+        function gotoMarea2() {
+            console.log("Going to Photo (screen5)")
+            changeScreen(screenMarea2);
+        }
+
+        function gotoMarea() {
+            console.log("Going to Photo (screen5)")
+            changeScreen(screenMarea);
+        }
+
+        function gotoTimhowan() {
+            console.log("Going to Photo (screen5)")
+            changeScreen(screenTimhowan);
+        }
+
+        function gotoPopbar() {
+            console.log("Going to Photo (screen5)")
+            changeScreen(screenPopbar);
+        }
+
+        function gotoAbc() {
+            console.log("Going to Photo (screen5)")
+            changeScreen(screenAbc);
+        }
+
+        function gotoOotoya() {
+            console.log("Going to Photo (screen5)")
+            changeScreen(screenOotoya);
+        }
+
+        function gotoMap() {
+            console.log("Going to map")
+            changeScreen(screen6);
+            //mapStart();
+            var mapp = document.getElementById("mapp");
+            mapp.addEventListener('click', mappMouse);
+
+        }
+
+        function mappMouse() {
+            var x = document.getElementById("mapp_mouse");
+            if (x.style.display === 'none') {
+                x.style.display = 'block';
+            } else {
+                x.style.display = 'none';
+            }
+        }
+
+        function loaded() {
+
+            document.addEventListener('deviceready', ready);
+
+            letseatButton = document.getElementById("lets");
+
+            letseatButton.addEventListener('click', gotoTodays);
+
+            screen1 = document.getElementById('screen1');
+            screen2 = document.getElementById('screen2');
+            screen3 = document.getElementById('screen3');
+            screen4 = document.getElementById('screen4');
+            screen6 = document.getElementById('screen6');
+            screenPopbar = document.getElementById('popbar');
+            screenOotoya = document.getElementById('ootoya');
+            screenVan = document.getElementById('vanleewan');
+            screenLobster = document.getElementById('lobster');
+            screenGrom = document.getElementById('grom');
+            screenAbc = document.getElementById('abc');
+            screenMarea2 = document.getElementById('marea2');
+            screenMarea = document.getElementById('marea');
+            screenFutago = document.getElementById('futago');
+            screenTimhowan = document.getElementById('timhowan');
+
+            setButtons();
+            setPhotos();
+            setMaps();
+            changeScreen(screen1);
+        }
+
+        function setButtons() {
+            circleButtons = document.getElementsByClassName("circle");
+            for (var i = 0; i < circleButtons.length; i++) {
+                circleButtons[i].addEventListener('click', gotoMydiary);
+            }
+            heartButtons = document.getElementsByClassName("heart");
+            for (var i = 0; i < heartButtons.length; i++) {
+                heartButtons[i].addEventListener('click', gotoMyfavorite);
+            }
+            triangleButtons = document.getElementsByClassName("triangle");
+            for (var i = 0; i < triangleButtons.length; i++) {
+                triangleButtons[i].addEventListener('click', gotoTodays);
+            }
+        }
+
+        function setPhotos() {
+            lobsterPics = document.getElementsByClassName("lobster");
+            for (var i = 0; i < lobsterPics.length; i++) {
+                lobsterPics[i].addEventListener('click', gotoLobster);
+            }
+            futagoPics = document.getElementsByClassName("futago");
+            for (var i = 0; i < futagoPics.length; i++) {
+                futagoPics[i].addEventListener('click', gotoFutago);
+            }
+            gromPics = document.getElementsByClassName("grom");
+            for (var i = 0; i < gromPics.length; i++) {
+                gromPics[i].addEventListener('click', gotoGrom);
+            }
+            vanPics = document.getElementsByClassName("van");
+            for (var i = 0; i < vanPics.length; i++) {
+                vanPics[i].addEventListener('click', gotoVan);
+            }
+            mareaPics = document.getElementsByClassName("marea");
+            for (var i = 0; i < mareaPics.length; i++) {
+                mareaPics[i].addEventListener('click', gotoMarea);
+            }
+            marea2Pics = document.getElementsByClassName("marea2");
+            for (var i = 0; i < marea2Pics.length; i++) {
+                marea2Pics[i].addEventListener('click', gotoMarea2);
+            }
+            timhowanPics = document.getElementsByClassName("timhowan");
+            for (var i = 0; i < timhowanPics.length; i++) {
+                timhowanPics[i].addEventListener('click', gotoTimhowan);
+            }
+            popbarPics = document.getElementsByClassName("popbar");
+            for (var i = 0; i < popbarPics.length; i++) {
+                popbarPics[i].addEventListener('click', gotoPopbar);
+            }
+            abcPics = document.getElementsByClassName("abc");
+            console.log(abcPics)
+            for (var i = 0; i < abcPics.length; i++) {
+                abcPics[i].addEventListener('click', gotoAbc);
+            }
+            ootoyaPics = document.getElementsByClassName("ootoya");
+            for (var i = 0; i < ootoyaPics.length; i++) {
+                ootoyaPics[i].addEventListener('click', gotoOotoya);
+            }
+        }
+
+        function setMaps() {
+            locations = document.getElementsByClassName("locationPhoto");
+            for (var i = 0; i < locations.length; i++) {
+                locations[i].addEventListener('click', gotoMap);
+            }
+
+        }
+
+        function changeScreen(newScreen) {
+            if (currentScreen != null) {
+                currentScreen.style.display = "none";
+            }
+            currentScreen = newScreen;
+            currentScreen.style.display = "block";
+
+        }
+
+        function myMap() {
+            var mapOptions = {
+                center: new google.maps.LatLng(40.7313215, -73.9901486),
+                zoom: 18
+                // mapTypeId: google.maps.MapTypeId.HYBRID
+            }
+
+            var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+            var infowindow = new google.maps.InfoWindow({
+                content: "hi"
+            });
+
+            var myLatLng = {
+                lat: 40.7313215,
+                lng: -73.9901486
+            };
+            var marker = new google.maps.Marker({
+                position: myLatLng,
+                map: map,
+                title: 'Hello World!'
+            });
+            marker.addListener('click', function() {
+                infowindow.open(map, marker);
+            });
+
+        }
+
+        // function mapStart(){
+        // var layer = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_nolabels/{z}/{x}/{y}.png', {
+        //       attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
+        //     });
+
+        //     var map = L.map('map', {
+        //       scrollWheelZoom: false,
+        //       center: [40.7127837, -74.0059413],
+        //       zoom: 6
+        //     });
+
+        //     map.addLayer(layer);
+
+        // }
+
+
+        window.addEventListener('load', loaded);
+    </script>
+
+    <style>
+        @import url(https://fonts.googleapis.com/css?family=Lato:300italic,700italic,300,700);
+
+
+        #screen1 {
+            display: none;
+        }
+
+        #screen2 {
+            display: none;
+        }
+
+        #screen3 {
+            display: none;
+        }
+
+        #screen4 {
+            display: none;
+        }
+
+        .screen5 {
+            display: none;
+        }
+
+        #screen6 {
+            display: none;
+        }
+
+        .block {
+            display: none;
+        }
+
+        #favorite {
+            display: none;
+        }
+
+        #mapp_mouse {
+            display: none;
+        }
+
+
+        #lets {
+
+            height: 60px;
+            width: 200px;
+            position: absolute;
+            margin: auto;
+            top: 400px;
+            bottom: 0px;
+            left: 0px;
+            right: 0px;
+
+            background: #d3000d;
+            text-align: center;
+            line-height: 57px;
+            font-size: 25px;
+            color: white;
+            font-family: 'Lato';
+        }
+
+
+        #logo {
+            top: -300px;
+            bottom: 0px;
+            left: 0px;
+            right: 0px;
+            position: absolute;
+            margin: auto;
+        }
+
+        #logo2 {
+            top: -600px;
+            bottom: 0px;
+            left: 0px;
+            right: 0px;
+            position: absolute;
+            margin: auto;
+        }
+
+        #lifeis {
+            top: 0px;
+            bottom: 0px;
+            left: 0px;
+            right: 0px;
+            position: absolute;
+            margin: auto;
+            color: #d3000d;
+        }
+
+        body {
+            background-color: white;
+            font-family: 'Lato';
+        }
+
+        .title {
+            top: -470px;
+            bottom: 0px;
+            left: 0px;
+            right: 0px;
+            position: absolute;
+            margin: auto;
+        }
+
+        .title3 {
+            top: -470px;
+            bottom: 0px;
+            left: 20px;
+            right: 0px;
+            position: absolute;
+            margin: auto;
+        }
+
+        .symbol {
+            top: -485px;
+            bottom: 0px;
+            left: -20px;
+            right: 0px;
+            position: absolute;
+            margin: auto;
+        }
+
+        .heartS {
+            top: -485px;
+            bottom: 0px;
+            left: 0px;
+            right: 0px;
+            position: absolute;
+            margin: auto;
+        }
+
+        .block1 {
+            top: -270px;
+            bottom: 0px;
+            left: -245px;
+            right: 0px;
+            position: absolute;
+            margin: auto;
+        }
+
+        .block2 {
+            top: -270px;
+            bottom: 0px;
+            left: 0px;
+            right: 0px;
+            position: absolute;
+            margin: auto;
+        }
+
+        .block3 {
+            top: -270px;
+            bottom: 0px;
+            left: 245px;
+            right: 0px;
+            position: absolute;
+            margin: auto;
+        }
+
+        .block4 {
+            top: -25px;
+            bottom: 0px;
+            left: -245px;
+            right: 0px;
+            position: absolute;
+            margin: auto;
+        }
+
+        .block5 {
+            top: -25px;
+            bottom: 0px;
+            left: 0px;
+            right: 0px;
+            position: absolute;
+            margin: auto;
+        }
+
+        .block6 {
+            top: -25px;
+            bottom: 0px;
+            left: 245px;
+            right: 0px;
+            position: absolute;
+            margin: auto;
+        }
+
+        .block7 {
+            top: 220px;
+            bottom: 0px;
+            left: -245px;
+            right: 0px;
+            position: absolute;
+            margin: auto;
+        }
+
+        .block8 {
+            top: 220px;
+            bottom: 0px;
+            left: 0px;
+            right: 0px;
+            position: absolute;
+            margin: auto;
+        }
+
+        .block9 {
+            top: 220px;
+            bottom: 0px;
+            left: 245px;
+            right: 0px;
+            position: absolute;
+            margin: auto;
+        }
+
+        .block10 {
+            top: -50px;
+            bottom: 0px;
+            left: 0px;
+            right: 0px;
+            position: absolute;
+            margin: auto;
+        }
+
+        .triangle {
+            top: 600px;
+            bottom: 0px;
+            left: -240px;
+            right: 0px;
+            position: absolute;
+            margin: auto;
+        }
+
+        .circle {
+            top: 600px;
+            bottom: 0px;
+            left: 0px;
+            right: 0px;
+            position: absolute;
+            margin: auto;
+        }
+
+        .heart {
+            top: 600px;
+            bottom: 0px;
+            left: 240px;
+            right: 0px;
+            position: absolute;
+            margin: auto;
+        }
+
+        .input1 {
+            top: 430px;
+            bottom: 0px;
+            left: 0px;
+            right: 0px;
+            position: absolute;
+            margin: auto;
+            width: 100px;
+            height: 13px;
+            text-align: center;
+            background-color: #E1E1E1;
+        }
+
+        .input2 {
+            top: 470px;
+            bottom: 0px;
+            left: 0px;
+            right: 0px;
+            position: absolute;
+            margin: auto;
+            width: 100px;
+            height: 13px;
+            text-align: center;
+            background-color: #E1E1E1;
+        }
+
+        .input3 {
+            top: 510px;
+            bottom: 0px;
+            left: 0px;
+            right: 0px;
+            position: absolute;
+            margin: auto;
+            width: 100px;
+            height: 13px;
+            text-align: center;
+            background-color: #E1E1E1;
+        }
+
+        .name {
+            top: -480px;
+            bottom: 0px;
+            left: -190px;
+            right: 0px;
+            position: absolute;
+            margin: auto;
+            font-weight: bold;
+            font-variant: normal;
+            font-size: 14px;
+        }
+
+        .badge {
+            top: -480px;
+            bottom: 0px;
+            left: -345px;
+            right: 0px;
+            position: absolute;
+            margin: auto;
+        }
+
+        .time {
+            top: -480px;
+            bottom: 0px;
+            left: 260px;
+            right: 0px;
+            position: absolute;
+            margin: auto;
+            font-variant: normal;
+            font-size: 13px;
+        }
+
+        .location {
+            top: 400px;
+            bottom: 0px;
+            left: 0px;
+            right: 0px;
+            font-weight: bold;
+            position: absolute;
+            margin: auto;
+            text-align: center;
+        }
+
+        .hugeImage {
+            top: 20px;
+            bottom: 0px;
+            left: 0px;
+            right: 0px;
+            position: absolute;
+            margin: auto;
+            width: 450px;
+            height: 450px;
+        }
+
+        #favorite {
+            top: 510px;
+            bottom: 0px;
+            left: 0px;
+            right: 0px;
+            font-size: 14px;
+            position: absolute;
+            margin: auto;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .mapp {
+            top: -40px;
+            bottom: 0px;
+            left: 0px;
+            right: 0px;
+            position: absolute;
+            margin: auto;
+            text-align: center;
+        }
+
+        #comment {
+            top: -300px;
+            bottom: 0px;
+            left: -100px;
+            right: 0px;
+            position: absolute;
+            margin: auto;
+        }
+    </style>
+
+
+</head>
+
+<body>
+    <!-- <div class="app"> -->
+    <!-- <h1>Apache Cordova</h1> -->
+    <div id="screen1" style="display: block;">
+        <img id="logo" src="img/logo.png" style="width:200px;height:150px;">
+        <img id="lifeis" src="img/lifeis.png" style="width:200px;height:47px;">
+        <div id="lets" class="blink"> Let's Eat! </div>
+        <!-- <img id = "todays" src="todays.png" > -->
+        <!-- <p id= "cp">Life is too short to be ignorant of good food</p> -->
+
+        <!-- <script type="text/javascript" src="cordova.js"></script> -->
+    </div>
+    <div id="screen2">
+        <img id="logo2" src="img/logo.png" style="width:50px; height:35px">
+        <img class="title" src="img/today'sgourmet.png" style="width:200px; height:55px">
+        <img class="symbol" src="img/triangle.png" style="width:15px; height:15px">
+        <img class="hugeImage block abc" src="img/Sq_abckitchen.jpg">
+        <img class="hugeImage block futago" src="img/Sq_futago.jpg">
+        <img class="hugeImage block grom" src="img/Sq_grom.jpg">
+        <img class="hugeImage block lobster" src="img/Sq_lobster.jpg">
+        <img class="hugeImage block van" src="img/Sq_Vanleewan.jpg">
+        <img class="hugeImage block timhowan" src="img/Sq_timhowan.jpg">
+        <img class="hugeImage block marea" src="img/Sq_marea.jpg">
+        <img class="hugeImage block ootoya" src="img/Sq_Ootoya.jpg">
+        <img class="hugeImage block popbar" src="img/Sq_popbar.jpg">
+
+        <img class="triangle" id="triangleButton" src="img/triangle.png" style="width:20px; height:20px">
+        <img class="circle" id="circleButton" src="img/whitecircle.png" style="width:20px; height:20px">
+        <img class="heart" id="heartButton" src="img/whiteheart.png" style="width:20px; height:20px">
+        <p id="favorite" type="text" style="width:200px; height:15px">this is your favorite food!</p>
+        <!-- <div id="input1" type="input" value="#name_of_food"></div> -->
+
+
+    </div>
+    <div id="screen3">
+        <img id="logo2" src="img/logo.png" style="width:50px; height:35px">
+        <img class="title" src="img/mydiary.png" style="width:130px; height:55px">
+        <img class="symbol" src="img/circle.png" style="width:15px; height:15px">
+        <img class="block1 abc" src="img/Sq_abckitchen.jpg" style="width:120px; height:120px">
+        <img class="block2 futago" src="img/Sq_futago.jpg" style="width:120px; height:120px">
+        <img class="block3 grom" src="img/Sq_grom.jpg" style="width:120px; height:120px">
+        <img class="block4 van" src="img/Sq_Vanleewan.jpg" style="width:120px; height:120px">
+        <img class="block5 marea2" src="img/Sq_marea2.jpg" style="width:120px; height:120px">
+        <img class="block6 timhowan" src="img/Sq_timhowan.jpg" style="width:120px; height:120px">
+        <img class="block7 marea" src="img/Sq_marea.jpg" style="width:120px; height:120px">
+        <img class="block8 ootoya" src="img/Sq_Ootoya.jpg" style="width:120px; height:120px">
+        <img class="block9 popbar" src="img/Sq_popbar.jpg" style="width:120px; height:120px">
+        <img class="triangle" id="triangleButton" src="img/whitetriangle.png" style="width:20px; height:20px">
+        <img class="circle" id="circleButton" src="img/circle.png" style="width:20px; height:20px">
+        <img class="heart" id="heartButton" src="img/whiteheart.png" style="width:20px; height:20px">
+        <input class="input1" type="text" value="#name" style="width:115px; height:15px">
+        <input class="input2" type="text" value="#category" style="width:115px; height:15px">
+        <input class="input3" type="text" value="#city" style="width:115px; height:15px">
+        <!-- <div id="input1" type="input" value="#name_of_food"></div> -->
+
+
+    </div>
+    <div id="screen4">
+        <img id="logo2" src="img/logo.png" style="width:50px; height:35px">
+        <img class="title3" src="img/myfavorite.png" style="width:140px; height:55px">
+        <img class="symbol" src="img/heart.png" style="width:15px; height:15px">
+
+        <img class="block1 popbar" src="img/Sq_popbar.jpg" style="width:120px; height:120px">
+        <img class="block2 ootoya" src="img/Sq_Ootoya.jpg" style="width:120px; height:120px">
+        <img class="block3 van" src="img/Sq_Vanleewan.jpg" style="width:120px; height:120px">
+        <img class="block4 lobster" src="img/Sq_lobster.jpg" style="width:120px; height:120px">
+        <img class="block5 grom" src="img/Sq_grom.jpg" style="width:120px; height:120px">
+        <img class="block6 abc" src="img/Sq_abckitchen.jpg" style="width:120px; height:120px">
+        <img class="block7 marea2" src="img/Sq_marea2.jpg" style="width:120px; height:120px">
+        <img class="block8 futago" src="img/Sq_futago.jpg" style="width:120px; height:120px">
+        <img class="block9 timhowan" src="img/Sq_timhowan.jpg" style="width:120px; height:120px">
+        <img class="triangle" id="triangleButton" src="img/whitetriangle.png" style="width:20px; height:20px">
+        <img class="circle" id="circleButton" src="img/whitecircle.png" style="width:20px; height:20px">
+        <img class="heart" id="heartButton" src="img/heart.png" style="width:20px; height:20px">
+        <input class="input1" type="text" value="#name" style="width:115px; height:15px">
+        <input class="input2" type="text" value="#category" style="width:115px; height:15px">
+        <input class="input3" type="text" value="#city" style="width:115px; height:15px">
+        <!-- <div id="input1" type="input" value="#name_of_food"></div> -->
+
+
+    </div>
+
+    <div class="screen5" id="popbar">
+
+
+        <img id="logo2" src="img/logo.png" style="width:50px; height:35px">
+
+        <img class="heartS" src="img/heart.png" style="width:15px; height:15px">
+
+        <img class="block10" src="img/Sq_popbar.jpg" style="width:400px; height:400px">
+        <img class="triangle" id="triangleButton" src="img/whitetriangle.png" style="width:20px; height:20px">
+        <img class="circle" id="circleButton" src="img/whitecircle.png" style="width:20px; height:20px">
+        <img class="heart" id="heartButton" src="img/whiteheart.png" style="width:20px; height:20px">
+        <img class="badge" src="img/blackcircle.png" style="width:15px; height:15px">
+        <p class="name" type="text" style="width:125px; height:25px">xjjiyoungx</p>
+        <p class="time" type="text" style="width:125px; height:25px">2016.5.13 2:01PM</p>
+        <p class="location" type="text" style="width:125px; height:25px">Pop bar, New York</p>
+        <p class="input1" type="text" style="width:115px; height:15px">#icecream</p>
+        <p class="input2" type="text" style="width:115px; height:15px">#dessert</p>
+        <p class="input3" type="text" style="width:115px; height:15px">#newyork</p>
+
+    </div>
+    <div class="screen5" id="ootoya">
+
+
+        <img id="logo2" src="img/logo.png" style="width:50px; height:35px">
+
+        <img class="heartS" src="img/heart.png" style="width:15px; height:15px">
+
+        <img class="block10" src="img/Sq_Ootoya.jpg" style="width:400px; height:400px">
+        <img class="triangle" id="triangleButton" src="img/whitetriangle.png" style="width:20px; height:20px">
+        <img class="circle" id="circleButton" src="img/whitecircle.png" style="width:20px; height:20px">
+        <img class="heart" id="heartButton" src="img/whiteheart.png" style="width:20px; height:20px">
+        <img class="badge" src="img/blackcircle.png" style="width:15px; height:15px">
+        <p class="name" type="text" style="width:125px; height:25px">xjjiyoungx</p>
+        <p class="time" type="text" style="width:125px; height:25px">2016.5.13 2:01PM</p>
+        <p class="location" type="text" style="width:125px; height:25px">Ootoya, New York</p>
+        <p class="input1" type="text" style="width:115px; height:15px">#homemade</p>
+        <p class="input2" type="text" style="width:115px; height:15px">#japanese</p>
+        <p class="input3" type="text" style="width:115px; height:15px">#newyork</p>
+
+    </div>
+    <div class="screen5" id="vanleewan">
+
+
+        <img id="logo2" src="img/logo.png" style="width:50px; height:35px">
+
+        <img class="heartS" src="img/heart.png" style="width:15px; height:15px">
+
+        <img class="block10" src="img/Sq_Vanleewan.jpg" style="width:400px; height:400px">
+        <img class="triangle" id="triangleButton" src="img/whitetriangle.png" style="width:20px; height:20px">
+        <img class="circle" id="circleButton" src="img/whitecircle.png" style="width:20px; height:20px">
+        <img class="heart" id="heartButton" src="img/whiteheart.png" style="width:20px; height:20px">
+        <img class="badge" src="img/blackcircle.png" style="width:15px; height:15px">
+        <p class="name" type="text" style="width:125px; height:25px">xjjiyoungx</p>
+        <p class="time" type="text" style="width:125px; height:25px">2016.5.13 2:01PM</p>
+        <p class="location" type="text" style="width:150px; height:25px">Van Lee Wan, New York</p>
+        <p class="input1" type="text" style="width:115px; height:15px">#icecream</p>
+        <p class="input2" type="text" style="width:115px; height:15px">#dessert</p>
+        <p class="input3" type="text" style="width:115px; height:15px">#newyork</p>
+
+    </div>
+    <div class="screen5" id="lobster">
+
+
+        <img id="logo2" src="img/logo.png" style="width:50px; height:35px">
+
+        <img class="heartS" src="img/heart.png" style="width:15px; height:15px">
+
+        <img class="block10" src="img/Sq_lobster.jpg" style="width:400px; height:400px">
+        <img class="triangle" id="triangleButton" src="img/whitetriangle.png" style="width:20px; height:20px">
+        <img class="circle" id="circleButton" src="img/whitecircle.png" style="width:20px; height:20px">
+        <img class="heart" id="heartButton" src="img/whiteheart.png" style="width:20px; height:20px">
+        <img class="badge" src="img/blackcircle.png" style="width:15px; height:15px">
+        <p class="name" type="text" style="width:125px; height:25px">xjjiyoungx</p>
+        <p class="time" type="text" style="width:125px; height:25px">2016.5.13 2:01PM</p>
+        <p class="location" type="text" style="width:125px; height:25px">Lobster Bar, Seoul</p>
+        <p class="input1" type="text" style="width:115px; height:15px">#lobster</p>
+        <p class="input2" type="text" style="width:115px; height:15px">#american</p>
+        <p class="input3" type="text" style="width:115px; height:15px">#seoul</p>
+
+    </div>
+    <div class="screen5" id="grom">
+
+
+        <img id="logo2" src="img/logo.png" style="width:50px; height:35px">
+
+        <img class="heartS" src="img/heart.png" style="width:15px; height:15px">
+
+        <img class="block10" src="img/Sq_grom.jpg" style="width:400px; height:400px">
+        <img class="triangle" id="triangleButton" src="img/whitetriangle.png" style="width:20px; height:20px">
+        <img class="circle" id="circleButton" src="img/whitecircle.png" style="width:20px; height:20px">
+        <img class="heart" id="heartButton" src="img/whiteheart.png" style="width:20px; height:20px">
+        <img class="badge" src="img/blackcircle.png" style="width:15px; height:15px">
+        <p class="name" type="text" style="width:125px; height:25px">xjjiyoungx</p>
+        <p class="time" type="text" style="width:125px; height:25px">2016.5.13 2:01PM</p>
+        <p class="location" type="text" style="width:125px; height:25px">Grom, New York</p>
+        <p class="input1" type="text" style="width:115px; height:15px">#icecream</p>
+        <p class="input2" type="text" style="width:115px; height:15px">#dessert</p>
+        <p class="input3" type="text" style="width:115px; height:15px">#newyork</p>
+
+    </div>
+    <div class="screen5" id="abc">
+
+
+        <img id="logo2" src="img/logo.png" style="width:50px; height:35px">
+
+        <img class="heartS" src="img/heart.png" style="width:15px; height:15px">
+
+        <img class="block10" src="img/Sq_abckitchen.jpg" style="width:400px; height:400px">
+        <img class="triangle" id="triangleButton" src="img/whitetriangle.png" style="width:20px; height:20px">
+        <img class="circle" id="circleButton" src="img/whitecircle.png" style="width:20px; height:20px">
+        <img class="heart" id="heartButton" src="img/whiteheart.png" style="width:20px; height:20px">
+        <img class="badge" src="img/blackcircle.png" style="width:15px; height:15px">
+        <p class="name" type="text" style="width:125px; height:25px">xjjiyoungx</p>
+        <p class="time" type="text" style="width:125px; height:25px">2016.5.13 2:01PM</p>
+        <p class="location" type="text" style="width:125px; height:25px">Abc Kitchen, New York</p>
+        <p class="input1" type="text" style="width:115px; height:15px">#pizza</p>
+        <p class="input2" type="text" style="width:115px; height:15px">#american</p>
+        <p class="input3" type="text" style="width:115px; height:15px">#newyork</p>
+
+    </div>
+    <div class="screen5" id="marea">
+
+
+        <img id="logo2" src="img/logo.png" style="width:50px; height:35px">
+
+        <img class="heartS" src="img/heart.png" style="width:15px; height:15px">
+
+        <img class="block10" src="img/Sq_marea.jpg" style="width:400px; height:400px">
+        <img class="triangle" id="triangleButton" src="img/whitetriangle.png" style="width:20px; height:20px">
+        <img class="circle" id="circleButton" src="img/whitecircle.png" style="width:20px; height:20px">
+        <img class="heart" id="heartButton" src="img/whiteheart.png" style="width:20px; height:20px">
+        <img class="badge" src="img/blackcircle.png" style="width:15px; height:15px">
+        <p class="name" type="text" style="width:125px; height:25px">xjjiyoungx</p>
+        <p class="time" type="text" style="width:125px; height:25px">2016.5.13 2:01PM</p>
+        <p class="location" type="text" style="width:125px; height:25px">Marea, New York</p>
+        <p class="input1" type="text" style="width:115px; height:15px">#pasta</p>
+        <p class="input2" type="text" style="width:115px; height:15px">#italian</p>
+        <p class="input3" type="text" style="width:115px; height:15px">#newyork</p>
+
+    </div>
+    <div class="screen5" id="marea2">
+
+
+        <img id="logo2" src="img/logo.png" style="width:50px; height:35px">
+
+        <img class="heartS" src="img/heart.png" style="width:15px; height:15px">
+
+        <img class="block10" src="img/Sq_marea2.jpg" style="width:400px; height:400px">
+        <img class="triangle" id="triangleButton" src="img/whitetriangle.png" style="width:20px; height:20px">
+        <img class="circle" id="circleButton" src="img/whitecircle.png" style="width:20px; height:20px">
+        <img class="heart" id="heartButton" src="img/whiteheart.png" style="width:20px; height:20px">
+        <img class="badge" src="img/blackcircle.png" style="width:15px; height:15px">
+        <p class="name" type="text" style="width:125px; height:25px">xjjiyoungx</p>
+        <p class="time" type="text" style="width:125px; height:25px">2016.5.13 2:01PM</p>
+        <p class="location" type="text" style="width:125px; height:25px">Marea, New York</p>
+        <p class="input1" type="text" style="width:115px; height:15px">#pasta</p>
+        <p class="input2" type="text" style="width:115px; height:15px">#italian</p>
+        <p class="input3" type="text" style="width:115px; height:15px">#newyork</p>
+
+    </div>
+    <div class="screen5" id="futago">
+
+
+        <img id="logo2" src="img/logo.png" style="width:50px; height:35px">
+
+        <img class="heartS" src="img/heart.png" style="width:15px; height:15px">
+
+        <img class="block10" src="img/Sq_futago.jpg" style="width:400px; height:400px">
+        <img class="triangle" id="triangleButton" src="img/whitetriangle.png" style="width:20px; height:20px">
+        <img class="circle" id="circleButton" src="img/whitecircle.png" style="width:20px; height:20px">
+        <img class="heart" id="heartButton" src="img/whiteheart.png" style="width:20px; height:20px">
+        <img class="badge" src="img/blackcircle.png" style="width:15px; height:15px">
+        <p class="name" type="text" style="width:125px; height:25px">xjjiyoungx</p>
+        <p class="time" type="text" style="width:125px; height:25px">2016.5.13 2:01PM</p>
+        <p class="location" type="text" style="width:125px; height:25px">Futago, New York</p>
+        <p class="input1" type="text" style="width:115px; height:15px">#barbeque</p>
+        <p class="input2" type="text" style="width:115px; height:15px">#japanese</p>
+        <p class="input3" type="text" style="width:115px; height:15px">#newyork</p>
+
+    </div>
+    <div class="screen5" id="timhowan">
+
+
+        <img id="logo2" src="img/logo.png" style="width:50px; height:35px">
+
+        <img class="heartS" src="img/heart.png" style="width:15px; height:15px">
+
+        <img class="block10 locationPhoto" src="img/Sq_timhowan.jpg" style="width:400px; height:400px">
+        <img class="triangle" id="triangleButton" src="img/whitetriangle.png" style="width:20px; height:20px">
+        <img class="circle" id="circleButton" src="img/whitecircle.png" style="width:20px; height:20px">
+        <img class="heart" id="heartButton" src="img/whiteheart.png" style="width:20px; height:20px">
+        <img class="badge" src="img/blackcircle.png" style="width:15px; height:15px">
+        <img id="comment" src="img/comment.png" style="width:100px; height:50px">
+        <p class="name" type="text" style="width:125px; height:25px">xjjiyoungx</p>
+        <p class="time" type="text" style="width:125px; height:25px">2016.5.13 2:01PM</p>
+        <p class="location" type="text" style="width:125px; height:25px">Tim Ho Wan, New York</p>
+        <p class="input1" type="text" style="width:115px; height:15px">#dimsum</p>
+        <p class="input2" type="text" style="width:115px; height:15px">#chinese</p>
+        <p class="input3" type="text" style="width:115px; height:15px">#newyork</p>
+
+
+    </div>
+
+
+    <div id="screen6">
+        <img id="logo2" src="img/logo.png" style="width:50px; height:35px">
+        <img class="title" src="img/takemethere.png" style="width:130px; height:50px">
+        <!-- <div id="map" style="width:360px;height:360px">My map will go here</div> -->
+        <img class="mapp" id="mapp" src="img/mapp.png" style="width:450px; height:365px">
+        <img class="mapp" id="mapp_mouse" src="img/mapp_mouse.png" style="width:450px; height:365px">
+        <!-- <div id="map"></div> -->
+        <p class="location" type="text" style="width:125px; height:25px">Tim Ho Wan, New York</p>
+        <img class="triangle" id="triangleButton" src="img/whitetriangle.png" style="width:20px; height:20px">
+        <img class="circle" id="circleButton" src="img/whitecircle.png" style="width:20px; height:20px">
+        <img class="heart" id="heartButton" src="img/whiteheart.png" style="width:20px; height:20px">
+
+        <p class="input1" type="text" style="width:115px; height:15px">#dimsum</p>
+        <p class="input2" type="text" style="width:115px; height:15px">#chinese</p>
+        <p class="input3" type="text" style="width:115px; height:15px">#newyork</p>
+
+    </div>
+
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.7/p5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.7/addons/p5.dom.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.7/addons/p5.sound.min.js"></script>
+    <!--     /* clmtrackr libraries */ -->
+    <script src="libs/clmtrackr.js"></script>
+    <script src="libs/model_pca_20_svm.js"></script>
+    <script src="libs/emotion_classifier.js"></script>
+    <script src="libs/emotionmodel.js"></script>
+    <script src="sketch.js"></script>
+    <!--    <script src="https://maps.googleapis.com/maps/api/js?callback=myMap"></script> -->
+<!--     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAi1fFucNSPxaYl9_wPIKXDtcQVjHiEAhY&callback=myMap"   type="text/javascript"></script> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+</body>
+
+</html>
